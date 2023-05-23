@@ -22,31 +22,83 @@ function newNonPlayableCharacter(x, y) {
     }
 
     setInterval(moveCharacter, 1)
+    
+    let stopTimeout;
 
-    function walkEast() {
-        direction = 'east'
-        element.src = `./assets/red-character/east.gif`
-    }
+function walkEast(time) {
+  return new Promise((resolve) => {
+    direction = 'east';
+    element.src = './assets/red-character/east.gif';
 
-    function walkNorth() {
-        direction = 'north'
-        element.src = `./assets/red-character/north.gif`
-    }
+    setTimeout(() => {
+      resolve();
+    }, time);
+  }).then(() => {
+    stop();
+  });
+}
 
-    function walkWest() {
-        direction = 'west'
-        element.src = `./assets/red-character/west.gif`
-    }
+function walkNorth(time) {
+  return new Promise((resolve) => {
+    direction = 'north';
+    element.src = './assets/red-character/north.gif';
 
-    function walkSouth() {
-        direction = 'south'
-        element.src = `./assets/red-character/south.gif`
-    }
+    stopTimeout = setTimeout(() => {
+      direction = 'stop';
+      element.src = './assets/red-character/static.gif';
+    });
 
-    function stop() {
-        direction = null
-        element.src = `./assets/red-character/static.gif`
-    }
+    setTimeout(() => {
+      clearTimeout(stopTimeout);
+      resolve();
+    }, time);
+  }).then(() => {
+    stop();
+  });
+}
+
+function walkSouth(time) {
+  return new Promise((resolve) => {
+    direction = 'south';
+    element.src = './assets/red-character/south.gif';
+
+    stopTimeout = setTimeout(() => {
+      direction = 'stop';
+      element.src = './assets/red-character/static.gif';
+    });
+
+    setTimeout(() => {
+      clearTimeout(stopTimeout);
+      resolve();
+    }, time);
+  }).then(() => {
+    stop();
+  });
+}
+
+function walkWest(time) {
+  return new Promise((resolve) => {
+    direction = 'west';
+    element.src = './assets/red-character/west.gif';
+
+    stopTimeout = setTimeout(() => {
+      direction = 'stop';
+      element.src = './assets/red-character/static.gif';
+    });
+
+    setTimeout(() => {
+      clearTimeout(stopTimeout);
+      resolve();
+    }, time);
+  }).then(() => {
+    stop();
+  });
+}
+
+function stop() {
+  direction = null;
+  element.src = './assets/red-character/static.gif';
+}
 
     return {
         element: element,
